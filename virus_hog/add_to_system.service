@@ -1,0 +1,10 @@
+[Unit]
+Description=Script Daemon
+
+[Service]
+Type=simple
+ExecStart=etc/systemd/system/hog.sh
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
