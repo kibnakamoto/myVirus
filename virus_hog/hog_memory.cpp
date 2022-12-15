@@ -18,7 +18,7 @@ void decl()
 }
 
 
-
+// initial function from github repository daemon-skeleton-linux-c
 static void daemon()
 {
     pid_t pid;
@@ -92,15 +92,7 @@ int main()
     	// iterate through all threads, will work even if the amount of threads is larger than the amount
     	for(uint32_t i=0;i<thr_count;i++) threads[i] = std::thread(decl);
     	for(uint32_t i=0;i<thr_count;i++) threads[i].join();
-
-        //syslog (LOG_NOTICE, "first virus daemon started");
-        //sleep (120);
-        //break;
     }
-
-    //syslog (LOG_NOTICE, "first daemon virus terminated");
-    //closelog();
-
 	return 0;
 }
 
