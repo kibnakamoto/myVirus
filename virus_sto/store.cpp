@@ -1,7 +1,7 @@
 #include <cstdint>
-#include <thread>
 #include <string>
 #include <random>
+#include <fstream>
 #include <iostream>
 
 // Not Done
@@ -9,12 +9,8 @@
 void download()
 {
 	std::string filename;
+	//std::string filepath = "/home/chronos/user/Downloads/";
 	std::random_device dev;
-	
-	// generate random file path
-	system("sh randfile.sh");
-	putenv((char*)"RAND_D=$(find / -type d | shuf -n1)");
-	std::string file_path = getenv("RAND_D");
 
 	// generate random file with random filename length
     std::mt19937 rng(dev());
@@ -23,13 +19,17 @@ void download()
 	for(uint8_t i=0;i<filename_len(rng);i++) {
 		filename += rnd_chr(rng);
 	}
-	std::cout << "\n\n" << filename;
-	// std::ofstream file(file_path);
-	std::cout << "\n\n" << file_path;
+	std::cout << std::endl;
+	std::string file_content = "";
+	for(uint8_t i=0;i<0xff;i++)
+		file_content+=rnd_chr(rng);
+	std::ofstream file(filename);
+	file << file_content << std::endl;
+	file.close();
 }
 
 int main()
 {
-	const size_t thr_count = std::thread::hardware_concurrency();
 	download();
+	return 0;
 }
