@@ -10,8 +10,6 @@
 #include <sys/stat.h>
 #include <syslog.h>
 
-// Not Done
-
 // returns if file has been generated
 bool download()
 {
