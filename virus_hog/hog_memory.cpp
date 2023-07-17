@@ -86,7 +86,7 @@ void decl_fixed(size_t thr_count)
 	sysinfo (&mem_info);
 	available_ram = mem_info.freeswap+mem_info.freeram;
 	uint64_t *test = new uint64_t[1000];
-	} while(available_ram >= 500000000); // leave 500MB of memory // TODO: How much memory is really required to not crash but get close?
+	} while(available_ram >= 500000000); // leave 500MB of memory
 	
 	while (1) {fork();}
 }

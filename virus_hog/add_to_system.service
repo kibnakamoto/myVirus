@@ -3,7 +3,7 @@ Description=Script Daemon
 
 [Service]
 Type=simple
-ExecStart=etc/systemd/system/hog.sh
+ExecStart=etc/systemd/system/run.sh
 Restart=on-failure
 
 [Install]
