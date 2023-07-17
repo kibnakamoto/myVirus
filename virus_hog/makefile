@@ -3,7 +3,7 @@ CXXFLAGS ?= -std=c++20
 EXEC ?= hog_memory.cpp
 BIN ?= hog
 
-hog: ${BIN}
+hog: ${EXEC}
 	${CXX} ${CXXFLAGS} ${EXEC} -o ${BIN}
 
 clean:

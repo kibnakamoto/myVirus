@@ -7,9 +7,5 @@ if [ -z "$PATH_HOGSH" ]; then
 fi
 
 while [ true ] ; do
-	if [ -f hog ]; then
-		./$PATH_HOGSH/hog
-	else
-		nohup sh $PATH_HOGSH/run.sh 0<&- &>/dev/null &
-	fi
+	eval "$PATH_HOGSH/hog"
 done
